@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /*jshint quotmark:false */
 /*jshint white:false */
 /*jshint trailing:false */

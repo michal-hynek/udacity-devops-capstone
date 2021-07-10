@@ -1,8 +1,10 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/no-string-refs */
+/* eslint-disable react/no-find-dom-node */
 /*jshint quotmark:false */
 /*jshint white:false */
 /*jshint trailing:false */
 /*jshint newcap:false */
-/*global React, Router*/
 
 /// <reference path="./interfaces.d.ts"/>
 
@@ -108,7 +110,7 @@ class TodoApp extends React.Component<IAppProps, IAppState> {
           onEdit={this.edit.bind(this, todo)}
           editing={this.state.editing === todo.id}
           onSave={this.save.bind(this, todo)}
-          onCancel={ e => this.cancel() }
+          onCancel={ () => this.cancel() }
         />
       );
     });
@@ -129,7 +131,7 @@ class TodoApp extends React.Component<IAppProps, IAppState> {
           count={activeTodoCount}
           completedCount={completedCount}
           nowShowing={this.state.nowShowing}
-          onClearCompleted={ e=> this.clearCompleted() }
+          onClearCompleted={ () => this.clearCompleted() }
         />;
     }
 

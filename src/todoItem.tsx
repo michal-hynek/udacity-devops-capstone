@@ -1,8 +1,10 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/no-find-dom-node */
+/* eslint-disable react/no-string-refs */
 /*jshint quotmark: false */
 /*jshint white: false */
 /*jshint trailing: false */
 /*jshint newcap: false */
-/*global React */
 
 /// <reference path="./interfaces.d.ts"/>
 
@@ -20,7 +22,7 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
     this.state = { editText: this.props.todo.title };
   }
 
-  public handleSubmit(event : React.FormEvent) {
+  public handleSubmit() {
     var val = this.state.editText.trim();
     if (val) {
       this.props.onSave(val);
@@ -40,7 +42,7 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
       this.setState({editText: this.props.todo.title});
       this.props.onCancel(event);
     } else if (event.keyCode === ENTER_KEY) {
-      this.handleSubmit(event);
+      this.handleSubmit();
     }
   }
 
@@ -91,7 +93,7 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
             checked={this.props.todo.completed}
             onChange={this.props.onToggle}
           />
-          <label onDoubleClick={ e => this.handleEdit() }>
+          <label onDoubleClick={ () => this.handleEdit() }>
             {this.props.todo.title}
           </label>
           <button className="destroy" onClick={this.props.onDestroy} />

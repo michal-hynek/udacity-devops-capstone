@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 interface ITodo {
   id: string,
   title: string,

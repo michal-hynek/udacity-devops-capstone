@@ -5,6 +5,7 @@
         "moduleResolution": "node",
         "isolatedModules": false,
         "jsx": "react",
+        "lib": ["es2016", "dom"],
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "declaration": false,
@@ -12,23 +13,14 @@
         "removeComments": true,
         "noLib": false,
         "preserveConstEnums": true,
-        "suppressImplicitAnyIndexErrors": true
+        "suppressImplicitAnyIndexErrors": true,
+        "outDir": "../build"
     },
-    "filesGlob": [
-        "**/*.ts",
-        "**/*.tsx",
-        "!node_modules/**"
+    "include": [
+        "./**/*.tsx",
+        "./**/*.ts"
     ],
-    "files": [
-        "constants.ts",
-        "interfaces.d.ts",
-        "todoModel.ts",
-        "utils.ts",
-        "app.tsx",
-        "footer.tsx",
-        "todoItem.tsx"
-    ],
-    "exclude": [],
+    "exclude": ["node_modules/"],
     "baseUrl": "types",
     "typeRoots": ["types"]
 }

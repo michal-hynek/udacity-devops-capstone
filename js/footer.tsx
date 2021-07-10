@@ -6,7 +6,7 @@
 
 /// <reference path="./interfaces.d.ts"/>
 
-import * as classNames from "classnames";
+const classNames = require('classnames');
 import * as React from "react";
 import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS } from "./constants";
 import { Utils } from "./utils";

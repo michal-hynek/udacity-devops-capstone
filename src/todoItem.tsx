@@ -102,7 +102,7 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
           ref="editField"
           className="edit"
           value={this.state.editText}
-          onBlur={ e => this.handleSubmit(e) }
+          onBlur={ () => this.handleSubmit() }
           onChange={ e => this.handleChange(e) }
           onKeyDown={ e => this.handleKeyDown(e) }
         />

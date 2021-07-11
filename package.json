@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "tsc -p ./src/ && node ./node_modules/browserify/bin/cmd ./build/app.js -o ./build/bundle.js",
+    "build": "tsc -p ./src/ && node ./node_modules/browserify/bin/cmd ./build/app.js -o ./dist/bundle.js",
     "lint": "eslint src/ --ext=.tsx,.ts,.d.ts",
     "start": "node ./serve.js"
   },

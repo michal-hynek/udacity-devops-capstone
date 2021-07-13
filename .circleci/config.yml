@@ -10,8 +10,12 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install Docker
+          command: |
+            sudo apt-get update && sudo apt-get install -y docker
+      - run:
           name: Install awscliv2
-          command:  |
+          command: |
             sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
             sudo unzip awscliv2.zip && \
             sudo ./aws/install

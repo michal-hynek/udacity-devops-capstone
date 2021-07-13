@@ -46,11 +46,13 @@ jobs:
             sudo ./aws/install
       - run:
           name: Build and push Docker image
+          environment:
+            IMAGE_TAG: udacity-devops-capstone
           command: |
-            aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 001512705144.dkr.ecr.us-west-2.amazonaws.com
-            docker build -t udacity-devops-capstone .
-            docker tag udacity-devops-capstone:latest 001512705144.dkr.ecr.us-west-2.amazonaws.com/udacity-devops-capstone:latest
-            docker push 001512705144.dkr.ecr.us-west-2.amazonaws.com/udacity-devops-capstone:latest
+            aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin $ECR_REPOSITORY
+            docker build -t $IMAGE_TAG .
+            docker tag $IMAGE_TAG:latest $ECR_REPOSITORY/$IMAGE_TAG:latest
+            docker push $ECR_REPOSITORY/$IMAGE_TAG:latest
 
 workflows:
   default:

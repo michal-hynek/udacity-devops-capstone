@@ -9,10 +9,9 @@ jobs:
     <<: *node-image
     steps:
       - checkout
-      - run:
-          name: Install Docker
-          command: |
-            sudo apt-get update && sudo apt-get install -y docker
+      - setup_remote_docker:
+          version: 19.03.13
+          docker_layer_caching: true
       - run:
           name: Install awscliv2
           command: |

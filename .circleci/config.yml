@@ -56,5 +56,9 @@ workflows:
   default:
     jobs:
       - build
-      - lint
-      - push-docker-image-to-ecr
+      - lint:
+          requires:
+            - build
+      - push-docker-image-to-ecr:
+          requires:
+            - lint

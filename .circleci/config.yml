@@ -5,13 +5,6 @@ node-image: &node-image
     - image: circleci/node:16.4.2
 
 jobs:
-  lint:
-    <<: *node-image
-    steps:
-      - checkout
-      - run:
-          name: Lint code
-          command: npm run lint
   build:
     <<: *node-image
     steps:
@@ -28,6 +21,16 @@ jobs:
       - save_cache:
           paths: [/home/circleci/project/node_modules]
           key: build-{{ checksum "package.json" }}
+  lint:
+    <<: *node-image
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - build-{{ checksum "package.json" }}
+      - run:
+          name: Lint code
+          command: npm install && npm run lint
   push-docker-image-to-ecr:
     <<: *node-image
     steps:
@@ -52,6 +55,6 @@ jobs:
 workflows:
   default:
     jobs:
-      - lint
       - build
+      - lint
       - push-docker-image-to-ecr

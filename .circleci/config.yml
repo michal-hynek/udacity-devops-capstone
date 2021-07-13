@@ -2,7 +2,7 @@ version: 2.1
 
 node-image: &node-image
   docker:
-    - image: circleci/node:13.8.0
+    - image: circleci/node:16.4.2
 
 jobs:
   build-and-push-image:

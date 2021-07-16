@@ -1,7 +1,7 @@
 Parameters:
   RepositoryName:
     Description: Name of the ECR repository
-    Default: udacity-devops-capstone
+    Default: devops-capstone
     Type: String
 
 Resources:
@@ -9,3 +9,8 @@ Resources:
     Type: AWS::ECR::Repository
     Properties:
       RepositoryName: !Ref RepositoryName
+
+Outputs:
+  Repository:
+    Description: ECR Repository
+    Value: !Ref EcrRepository

@@ -1,0 +1,33 @@
+Parameters:
+  SecurityGroup:
+    Type: string
+
+Resources:
+  EksRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - eks.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEKSClusterPolicy
+
+  EksCluster:
+    Type: AWS::EKS::Cluster
+    Properties:
+      Name: devops-capstone
+      Version: 1.14
+      RoleArn: !Ref EksRole
+      ResourcesVpcConfig:
+        SecurityGroupIds:
+          # TODO
+          # - sg-id
+        SubnetIds:
+          # TODO
+          #- subnet-1
+          #- subnet-2

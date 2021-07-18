@@ -4,6 +4,10 @@ node-image: &node-image
   docker:
     - image: circleci/node:16.4.2
 
+orbs:
+  aws-eks: circleci/aws-eks@1.1.0
+  kubernetes: circleci/kubernetes@0.12.0
+
 jobs:
   build:
     <<: *node-image
@@ -47,12 +51,41 @@ jobs:
       - run:
           name: Build and push Docker image
           environment:
-            IMAGE_TAG: udacity-devops-capstone
+            IMAGE_TAG: devops-capstone
           command: |
             aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin $ECR_REPOSITORY
             docker build -t $IMAGE_TAG .
             docker tag $IMAGE_TAG:latest $ECR_REPOSITORY/$IMAGE_TAG:latest
             docker push $ECR_REPOSITORY/$IMAGE_TAG:latest
+  create-or-update-eks-deployment:
+    executor: aws-eks/python3
+    parameters:
+      cluster-name:
+        description: Name of the EKS cluster
+        type: string
+    steps:
+      - checkout
+      - kubernetes/install
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: << parameters.cluster-name >>
+          install-kubectl: true
+      - kubernetes/create-or-update-resource:
+          get-rollout-status: true
+          resource-file-path: ~/kubernetes/todos-app.yml
+          resource-name: deployment/todos-app
+  test-eks-cluster:
+    executor: aws-eks/python3
+    parameters:
+      cluster-name:
+        description: Name of the EKS cluster
+        type: string
+    steps:
+      - kubernetes/install
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: << parameters.cluster-name >>
+      - run:
+          command: kubectl get services
+          name: Test cluster
 
 workflows:
   default:
@@ -64,3 +97,18 @@ workflows:
       - push-docker-image-to-ecr:
           requires:
             - lint
+      - create-or-update-eks-deployment:
+          cluster-name: devops-capstone
+          requires:
+            - push-docker-image-to-ecr
+      - aws-eks/update-container-image:
+          cluster-name: devops-capstone
+          resource-name: "deployment/todos-app"
+          container-image-updates: $ECR_REPOSITORY/devops-capstone:latest
+          record: true
+          requires:
+            - create-or-update-eks-deployment
+      - test-eks-cluster:
+          cluster-name: devops-capstone
+          requires:
+            - aws-eks/update-container-image

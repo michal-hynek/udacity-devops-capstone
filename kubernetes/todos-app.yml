@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todos-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todos-app
+  template:
+    metadata:
+      labels:
+        app: todos-app
+    spec:
+      containers:
+        - name: todos-app
+          image: 001512705144.dkr.ecr.us-west-2.amazonaws.com/devops-capstone:latest
+          ports:
+            - containerPort: 4000
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todos-app
+spec:
+  selector:
+    app: todos-app
+  ports:
+    - port: 80
+      targetPort: 4000
+  type: LoadBalancer

@@ -94,13 +94,13 @@ jobs:
 workflows:
   default:
     jobs:
-      - build
-      - lint:
-          requires:
-            - build
-      - push-docker-image-to-ecr:
-          requires:
-            - lint
+      #- build
+      #- lint:
+      #    requires:
+      #      - build
+      #- push-docker-image-to-ecr:
+      #    requires:
+      #      - lint
       - create-or-update-eks-deployment:
           cluster-name: devops-capstone
           requires:

@@ -103,8 +103,8 @@ workflows:
       #      - lint
       - create-or-update-eks-deployment:
           cluster-name: devops-capstone
-          requires:
-            - push-docker-image-to-ecr
+          #requires:
+          #  - push-docker-image-to-ecr
       - aws-eks/update-container-image:
           cluster-name: devops-capstone
           resource-name: "deployment/todos-app"

@@ -90,14 +90,18 @@ Resources:
       VpcId: !Ref VPC
 
 Outputs:
-  SubnetIds:
-    Description: All subnets in the VPC
-    Value: !Join [",", [!Ref Subnet1, !Ref Subnet2]]
-
-  SecurityGroups:
-    Description: Security group for the cluster control plane communication with worker nodes
-    Value: !Ref ControlPlaneSecurityGroup
-
-  VpcId:
+  Vpc:
     Description: VPC
     Value: !Ref VPC
+
+  Subnet1:
+    Description: Subnet 1 in the VPC
+    Value: !Ref Subnet1
+
+  Subnet2:
+    Description: Subnet 2 in the VPC
+    Value: !Ref Subnet2
+
+  SecurityGroup:
+    Description: Security group for the cluster control plane communication with worker nodes
+    Value: !Ref ControlPlaneSecurityGroup

@@ -72,7 +72,7 @@ jobs:
           install-kubectl: true
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
-          resource-file-path: ~/kubernetes/todos-app.yml
+          resource-file-path: kubernetes/todos-app.yml
           resource-name: deployment/todos-app
   test-eks-cluster:
     executor: aws-eks/python3

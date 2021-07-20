@@ -105,6 +105,7 @@ workflows:
           #  - push-docker-image-to-ecr
       - aws-eks/update-container-image:
           cluster-name: devops-capstone
+          aws-region: ${AWS_REGION}
           resource-name: "deployment/todos-app"
           container-image-updates: $ECR_REPOSITORY/devops-capstone:latest
           record: true

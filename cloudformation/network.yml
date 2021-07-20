@@ -48,11 +48,14 @@ Resources:
           - Fn::GetAZs:
               Ref: AWS::Region
       CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
       VpcId:
         Ref: VPC
       Tags:
         - Key: Name
           Value: VPC-udacity-devops-capstone-subnet1"
+        - Key: kubernetes.io/cluster/devops-capstone
+          Value: shared
 
   Subnet2:
     Type: AWS::EC2::Subnet
@@ -65,11 +68,14 @@ Resources:
           - Fn::GetAZs:
               Ref: AWS::Region
       CidrBlock: 10.0.2.0/24
+      MapPublicIpOnLaunch: true
       VpcId:
         Ref: VPC
       Tags:
         - Key: Name
           Value: VPC-udacity-devops-capstone-subnet2"
+        - Key: kubernetes.io/cluster/devops-capstone
+          Value: shared
 
   Subnet1RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation

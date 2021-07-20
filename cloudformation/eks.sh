@@ -14,3 +14,10 @@ aws cloudformation deploy --stack-name devops-capstone-eks --template-file eks.y
     --parameter-overrides "Vpc=$VPC" "Subnet1=$SUBNET1" "Subnet2=$SUBNET2" "ClusterName=devops-capstone" "ClusterSecurityGroup=$SECURITY_GROUP" \
     --capabilities CAPABILITY_NAMED_IAM \
     --profile udacity
+
+# Only use the code below if you manually configured an autoscaling group instead of using EKS node group
+#echo "Configuring the EKS cluster..."
+#NODE_INSTANCE_ROLE=`aws cloudformation describe-stacks --stack-name devops-capstone-eks --query "Stacks[0].Outputs[?OutputKey=='NodeInstanceRole'].OutputValue" --output text --profile udacity`
+#aws eks update-kubeconfig --name devops-capstone --profile udacity
+#sed -i "s|rolearn\:.*$|rolearn\: $NODE_INSTANCE_ROLE|g" aws-auth-cm.yaml
+#kubectl apply -f aws-auth-cm.yaml

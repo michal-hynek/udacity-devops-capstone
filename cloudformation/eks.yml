@@ -41,7 +41,7 @@ Resources:
     Type: AWS::EKS::Nodegroup
     DependsOn: EksCluster
     Properties:
-      Nodegroupname: !Sub ${ClusterName}-NodeGroup
+      NodegroupName: !Sub ${ClusterName}-NodeGroup
       ClusterName: !Ref ClusterName
       AmiType: AL2_x86_64
       NodeRole: !GetAtt NodeInstanceRole.Arn

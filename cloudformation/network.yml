@@ -56,6 +56,8 @@ Resources:
           Value: VPC-udacity-devops-capstone-subnet1"
         - Key: kubernetes.io/cluster/devops-capstone
           Value: shared
+        - Key: kubernetes.io/role/elb
+          Value: 1
 
   Subnet2:
     Type: AWS::EC2::Subnet
@@ -76,6 +78,8 @@ Resources:
           Value: VPC-udacity-devops-capstone-subnet2"
         - Key: kubernetes.io/cluster/devops-capstone
           Value: shared
+        - Key: kubernetes.io/role/elb
+          Value: 1
 
   Subnet1RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation

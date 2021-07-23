@@ -89,7 +89,7 @@ jobs:
           command: kubectl get services
           name: Verify the service is present
       - run:
-          command: EKS_SERVICE_IP=`kubectl get service/todos-app -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'` && curl $EKS_SERVICE_IP && echo $EKS_SERVICE_IP
+          command: EKS_SERVICE_IP=`kubectl get service/todos-app -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'` && curl -s $EKS_SERVICE_IP > /dev/null
           name: Access the application URL
 
 workflows:

@@ -77,7 +77,7 @@ class TodoApp extends React.Component<IAppProps, IAppState> {
   }
 
   public cancel() {
-    this.setState({editing: null});;
+    this.setState({editing: null});
   }
 
   public clearCompleted() {

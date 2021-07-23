@@ -86,23 +86,26 @@ jobs:
           cluster-name: << parameters.cluster-name >>
           aws-region: ${AWS_REGION}
       - run:
-          command: EKS_SERVICE_IP=`kubectl get service/todos-app -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'` && curl $EKS_SERVICE_IP
-          name: Smoke test
+          command: kubectl get services
+          name: Verify the service is present
+      - run:
+          command: EKS_SERVICE_IP=`kubectl get service/todos-app -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'` && curl $EKS_SERVICE_IP && echo $EKS_SERVICE_IP
+          name: Access the application URL
 
 workflows:
   default:
     jobs:
-      #- build
-      #- lint:
-      #    requires:
-      #      - build
-      #- push-docker-image-to-ecr:
-      #    requires:
-      #      - lint
+      - build
+      - lint:
+          requires:
+            - build
+      - push-docker-image-to-ecr:
+          requires:
+            - lint
       - create-or-update-eks-deployment:
           cluster-name: devops-capstone
-          #requires:
-          #  - push-docker-image-to-ecr
+          requires:
+            - push-docker-image-to-ecr
       - aws-eks/update-container-image:
           cluster-name: devops-capstone
           aws-region: ${AWS_REGION}

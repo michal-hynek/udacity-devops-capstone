@@ -74,7 +74,7 @@ jobs:
           get-rollout-status: true
           resource-file-path: kubernetes/todos-app.yml
           resource-name: deployment/todos-app
-  test-eks-cluster:
+  smoke-test:
     executor: aws-eks/python3
     parameters:
       cluster-name:
@@ -86,8 +86,8 @@ jobs:
           cluster-name: << parameters.cluster-name >>
           aws-region: ${AWS_REGION}
       - run:
-          command: kubectl get services
-          name: Test cluster
+          command: EKS_SERVICE_IP=`kubectl get service/todos-app -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'` && curl $EKS_SERVICE_IP
+          name: Smoke test
 
 workflows:
   default:
@@ -111,7 +111,7 @@ workflows:
           record: true
           requires:
             - create-or-update-eks-deployment
-      - test-eks-cluster:
+      - smoke-test:
           cluster-name: devops-capstone
           requires:
             - aws-eks/update-container-image
